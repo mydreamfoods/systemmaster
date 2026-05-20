@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Systems Master — My Dream Foods</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0f2044;--navy2:#1a3260;--accent:#e8a020;--bg:#f0f3f9;--surface:#fff;--border:#dce2ef;--text:#0f1e3d;--dim:#5a6a8a;--faint:#b8c3d8;--r:8px;--sh:0 1px 4px rgba(15,32,68,.08);--sh2:0 4px 16px rgba(15,32,68,.12)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:"Plus Jakarta Sans",sans-serif;font-size:13.5px;min-height:100vh}
+header{background:var(--navy);padding:0 32px;height:62px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(15,32,68,.25)}
+.brand{display:flex;align-items:center;gap:13px}
+.logo{width:36px;height:36px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--navy);flex-shrink:0}
+.brand h1{font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px}
+.brand p{font-size:10.5px;color:rgba(255,255,255,.5);margin-top:1px}
+.hbadge{font-size:10.5px;font-family:"DM Mono",monospace;padding:4px 11px;border-radius:20px;font-weight:500;background:rgba(255,255,255,.1);color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.15)}
+main{padding:28px 32px;max-width:1440px;margin:0 auto}
+.loader{text-align:center;padding:60px;color:var(--dim)}
+.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--navy);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.err{background:#fff;border:1px solid #fca5a5;border-radius:var(--r);padding:20px;color:#991b1b;font-size:13px;line-height:1.8}
+.err strong{display:block;font-size:14px;margin-bottom:8px}
+.err code{background:#fee2e2;padding:2px 6px;border-radius:4px;font-family:"DM Mono",monospace;font-size:11.5px}
+.stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.stat{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;min-width:120px;cursor:pointer;transition:all .18s;box-shadow:var(--sh);border-left:3px solid transparent}
+.stat:hover{box-shadow:var(--sh2);transform:translateY(-1px)}
+.stat.on{border-left-color:var(--accent);background:#fffbf0}
+.stat .n{font-size:22px;font-weight:700;letter-spacing:-1px;line-height:1}
+.stat .l{font-size:10.5px;color:var(--dim);margin-top:4px;font-weight:500}
+.fbar{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.srch{position:relative;flex:1;min-width:220px;max-width:340px}
+.srch svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--dim);pointer-events:none}
+.srch input{width:100%;background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:8px 12px 8px 35px;color:var(--text);font-family:"Plus Jakarta Sans",sans-serif;font-size:13px;outline:none;transition:all .2s;box-shadow:var(--sh)}
+.srch input:focus{border-color:var(--navy2);box-shadow:0 0 0 3px rgba(26,50,96,.1)}
+.srch input::placeholder{color:var(--faint)}
+.fbts{display:flex;gap:6px;flex-wrap:wrap}
+.fbt{padding:6px 13px;border-radius:20px;font-size:11.5px;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid var(--border);background:#fff;color:var(--dim)}
+.fbt:hover{border-color:var(--navy2);color:var(--navy)}
+.fbt.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.twrap{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden;overflow-x:auto;box-shadow:var(--sh)}
+table{width:100%;border-collapse:collapse}
+thead{background:#f7f9fc}
+th{padding:11px 16px;text-align:left;font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--dim);border-bottom:1px solid var(--border);white-space:nowrap}
+tbody tr{border-bottom:1px solid #f0f3f9;transition:background .1s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#f7f9fc}
+tbody tr.alt{background:#fafbfd}
+tbody tr.alt:hover{background:#f7f9fc}
+td{padding:10px 16px;vertical-align:middle}
+.dp{display:inline-block;padding:3px 9px;border-radius:5px;font-size:11px;font-weight:600;white-space:nowrap}
+.d0{background:#e3eaf9;color:#1a3260}.d1{background:#e4f5ec;color:#166534}.d2{background:#fef3e2;color:#92400e}.d3{background:#fde8ec;color:#9f1239}.d4{background:#f0ecfd;color:#5b21b6}.d5{background:#e0f5ff;color:#075985}.d6{background:#fef9e7;color:#78350f}.d7{background:#f1f5f9;color:#475569}
+.chips{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:5px;font-size:11px;font-weight:500;text-decoration:none;transition:all .12s;border:1px solid transparent;white-space:nowrap}
+.chip:hover{opacity:.85;transform:translateY(-1px)}
+.cf{background:#e3eaf9;color:#1a3260;border-color:#c5d3ef}.cs{background:#e4f5ec;color:#166534;border-color:#a7d9bc}.cl{background:#fde8ec;color:#9f1239;border-color:#f9c0cc}.cd{background:#f0ecfd;color:#5b21b6;border-color:#d4c5fa}.ck{background:#e0f5ff;color:#075985;border-color:#b3d9f0}.ct{background:#f1f5f9;color:#64748b;border-color:#e2e8f0;font-size:10.5px}
+.sbar{font-size:11px;font-family:"DM Mono",monospace;color:var(--dim);margin-top:14px;padding-top:10px;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.sdot{width:7px;height:7px;border-radius:50%;background:#16a34a;flex-shrink:0}
+.sdot.spin{background:var(--accent);animation:pulse 1s infinite}
+.sdot.err{background:#ef4444}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.person{color:var(--dim);font-size:12px}
+@media(max-width:768px){header{padding:0 16px}main{padding:16px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">MDF</div>
+    <div><h1>My Dream Foods Limited</h1><p>Systems Master</p></div>
+  </div>
+  <span class="hbadge" id="badge">Loading...</span>
+</header>
+<main id="main">
+  <div class="loader"><div class="spinner"></div><p>Sheet se data load ho raha hai...</p></div>
+</main>
+<div style="padding:0 32px 20px">
+  <div class="sbar"><span class="sdot spin" id="sdot"></span><span id="msg">Connecting...</span></div>
+</div>
+<script>
+var GAS_URL = "https://script.google.com/macros/s/AKfycbypCsgx2UZxhV1S0AcdmimwDj_dUnGkxMFinXVRsEvIuFBuKx_LdZerUP68yqW9VgoH/exec";
+var SD=[], curDept="all", deptMap={};
+var DC=["#1a3260","#166534","#92400e","#9f1239","#5b21b6","#075985","#78350f","#475569"];
+var DCL=["d0","d1","d2","d3","d4","d5","d6","d7"];
+
+function isURL(s){return!!(s&&s.indexOf("http")===0);}
+function chipType(u){
+  if(!isURL(u))return"text";
+  if(u.indexOf("/forms/")>-1)return"form";
+  if(u.indexOf("lookerstudio")>-1||u.indexOf("datastudio")>-1)return"looker";
+  if(u.indexOf("drive.google")>-1||u.indexOf("docs.google.com/file")>-1)return"drive";
+  if(u.indexOf("script.google")>-1)return"script";
+  return"sheet";
+}
+var CSVG={
+  form:'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>',
+  sheet:'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>',
+  looker:'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
+  drive:'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.56 16.83l-5-8.66A2 2 0 0 0 15.83 7H8.17a2 2 0 0 0-1.73 1l-5 8.66A2 2 0 0 0 3 19h18a2 2 0 0 0 1.73-3.17z"/></svg>',
+  script:'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>'
+};
+var CLBL={form:"Form",sheet:"Sheet",looker:"Report",drive:"Drive",script:"App"};
+var CCLS={form:"cf",sheet:"cs",looker:"cl",drive:"cd",script:"ck",text:"ct"};
+
+function chip(url,lbl){
+  if(!url)return"";
+  var t=chipType(url);
+  if(t==="text")return'<span class="chip ct">'+url+"</span>";
+  return'<a href="'+url+'" target="_blank" class="chip '+CCLS[t]+'">'+(CSVG[t]||"")+(lbl||CLBL[t])+"</a>";
+}
+function dCls(d){return DCL[deptMap[d]!==undefined?deptMap[d]:7];}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/"/g,"&quot;");}
+
+function loadData(){
+  fetch(GAS_URL + "?action=SystemMaster")
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if(!Array.isArray(data)) throw new Error("Invalid response from GAS");
+      SD = data;
+      buildUI();
+    })
+    .catch(function(err){
+      showErr(err.message);
+    });
+}
+
+function buildUI(){
+  var depts=[];
+  SD.forEach(function(r){if(depts.indexOf(r.dept)===-1)depts.push(r.dept);});
+  depts.forEach(function(d,i){deptMap[d]=i%DCL.length;});
+  document.getElementById("badge").textContent=SD.length+" Processes";
+  document.getElementById("sdot").className="sdot";
+  document.getElementById("msg").textContent="Live from Google Sheets · "+SD.length+" rows · "+new Date().toLocaleTimeString();
+
+  var c={},sh="",i=0;
+  SD.forEach(function(r){c[r.dept]=(c[r.dept]||0)+1;});
+  for(var d in c){sh+='<div class="stat" data-d="'+esc(d)+'"><div class="n" style="color:'+DC[i%DC.length]+'">'+c[d]+'</div><div class="l">'+d+'</div></div>';i++;}
+
+  var fh='<div class="fbt on" data-d="all">All</div>';
+  depts.forEach(function(d){fh+='<div class="fbt" data-d="'+esc(d)+'">'+d+'</div>';});
+
+  document.getElementById("main").innerHTML=
+    '<div class="stats" id="stats">'+sh+'</div>'+
+    '<div class="fbar"><div class="srch"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" id="q" placeholder="Search process, person..."></div>'+
+    '<div class="fbts" id="fbts">'+fh+'</div></div>'+
+    '<div class="twrap"><table><thead><tr><th style="width:150px">Department</th><th>Process</th><th>CRM / PC</th><th>Executive</th><th style="width:180px">FMS / Flow</th><th>Google Sheet</th></tr></thead><tbody id="tb"></tbody></table></div>';
+
+  document.getElementById("stats").addEventListener("click",function(e){
+    var el=e.target.closest(".stat");if(!el)return;
+    var d=el.dataset.d,same=curDept===d;
+    curDept=same?"all":d;
+    document.querySelectorAll(".stat").forEach(function(s){s.classList.remove("on");});
+    document.querySelectorAll("#fbts .fbt").forEach(function(b){b.classList.remove("on");});
+    if(!same){el.classList.add("on");var f=document.querySelector('#fbts .fbt[data-d="'+esc(d)+'"]');if(f)f.classList.add("on");}
+    else{document.querySelector("#fbts .fbt").classList.add("on");}
+    render();
+  });
+  document.getElementById("fbts").addEventListener("click",function(e){
+    var el=e.target.closest(".fbt");if(!el)return;
+    curDept=el.dataset.d;
+    document.querySelectorAll("#fbts .fbt").forEach(function(b){b.classList.remove("on");});
+    document.querySelectorAll(".stat").forEach(function(s){s.classList.remove("on");});
+    el.classList.add("on");
+    if(curDept!=="all"){var sc=document.querySelector('.stat[data-d="'+esc(curDept)+'"]');if(sc)sc.classList.add("on");}
+    render();
+  });
+  document.getElementById("q").addEventListener("input",render);
+  render();
+}
+
+function render(){
+  var q=document.getElementById("q").value.toLowerCase();
+  var rows=SD.filter(function(r){
+    return(curDept==="all"||r.dept===curDept)&&(!q||(r.dept+" "+r.process+" "+r.crm+" "+r.exec).toLowerCase().indexOf(q)>-1);
+  });
+  document.getElementById("tb").innerHTML=rows.length
+    ?rows.map(function(r,i){
+      return'<tr class="'+(i%2?"alt":"")+'"><td><span class="dp '+dCls(r.dept)+'">'+r.dept+'</span></td><td style="font-weight:500">'+r.process+'</td><td class="person">'+r.crm+'</td><td class="person">'+r.exec+'</td><td><div class="chips">'+chip(r.fms,isURL(r.fms)?"FMS":"")+(r.train&&isURL(r.train)?chip(r.train,"Training"):"")+'</div></td><td>'+(isURL(r.sheet)?'<a href="'+r.sheet+'" target="_blank" class="chip cs">'+CSVG.sheet+' Open</a>':r.sheet?'<span class="chip ct">'+r.sheet+'</span>':"")+'</td></tr>';
+    }).join("")
+    :'<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--dim)">No results</td></tr>';
+}
+
+function showErr(msg){
+  document.getElementById("sdot").className="sdot err";
+  document.getElementById("badge").textContent="Error";
+  document.getElementById("msg").textContent="Error: "+msg;
+  document.getElementById("main").innerHTML=
+    '<div class="err"><strong>&#9888; GAS Code Update Karo</strong>'+
+    'Apne GAS project (<code>mis@mydreem.in</code>) ke <code>Code.gs</code> mein <code>?action=SystemMaster</code> route add karo.<br>'+
+    'Downloaded <code>ADD_TO_CODE_gs.js</code> ka code dekhkar update karo, phir <b>New Deployment</b> karo.</div>';
+}
+
+loadData();
+</script>
+</body>
+</html>
